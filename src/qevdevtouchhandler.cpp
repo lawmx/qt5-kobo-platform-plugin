@@ -571,8 +571,8 @@ void QEvdevTouchScreenData::processInputEvent(input_event *data)
             m_currentData.trackingId = data->value;
 
             // QT apparently can't handle high tracking IDs well?
-            if (m_currentData.trackingId > 2)
-                m_currentData.trackingId = 1;
+            //if (m_currentData.trackingId > 2)
+            //    m_currentData.trackingId = 1;
 
             qCDebug(qLcEvdevTouch) << "EV_ABS TRACKING_ID " << m_currentData.trackingId;
             if (m_typeB)
@@ -582,7 +582,7 @@ void QEvdevTouchScreenData::processInputEvent(input_event *data)
                     m_contacts[m_currentSlot].state = Qt::TouchPointReleased;
                     qCDebug(qLcEvdevTouch) << "EV_ABS TRACKING_ID = -1 touch point released";
                 }
-                else
+                else if (m_currentData.trackingId != m_contacts[m_currentSlot].trackingId)
                 {
                     m_contacts[m_currentSlot].state = Qt::TouchPointPressed;
                     m_contacts[m_currentSlot].trackingId = m_currentData.trackingId;

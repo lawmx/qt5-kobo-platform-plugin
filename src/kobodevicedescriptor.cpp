@@ -235,6 +235,28 @@ KoboDeviceDescriptor KoboEuropa = {
     .touchDev = "/dev/input/by-path/platform-0-0010-event",
 };
 
+// Kobo Sage
+KoboDeviceDescriptor KoboCadmus = {
+    .device = KoboSage,
+    .mark = 8,
+    .dpi = 300,
+    .canToggleChargingLED = true,
+    .hasGSensor = true,
+    .frontlightSettings = {
+        .hasNaturalLight = true,
+        .hasNaturalLightMixer = true,
+        .naturalLightInverted = false,
+        .naturalLightMin = 0,
+        .naturalLightMax = 10,
+        .frontlightDevWhite = "/sys/class/backlight/mxc_msp430.0/brightness",
+        .frontlightDevMixer = "/sys/class/leds/aw99703-bl_FL1/color",
+    },
+    .isSunxi = true,
+    .batterySysfs = "/sys/class/power_supply/battery",
+    .ntxDev = "/dev/input/by-path/platform-ntx_event0-event",
+    .touchDev = "/dev/input/by-path/platform-0-0010-event",
+};
+
 static QString exec(const char *cmd)
 {
     std::array<char, 128> buffer;
@@ -357,6 +379,10 @@ KoboDeviceDescriptor determineDevice()
     else if (deviceName == "europa")
     {
         device = KoboEuropa;
+    }
+    else if (deviceName == "cadmus")
+    {
+        device = KoboCadmus;
     }
     else
     {
